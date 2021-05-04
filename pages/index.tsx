@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { Col, Row } from 'reactstrap';
+import React from 'react';
+import {useState} from 'react';
+import {Col, Row} from 'reactstrap';
 
-function InsertText({ text, setText }: {
+function InsertText({text, setText}: {
   text: string,
   setText: (t: string) => void,
 }) {
@@ -21,7 +22,7 @@ function InsertText({ text, setText }: {
 }
 
 function getWordsFromText(text: string) {
-  const words = [...text.matchAll(/[a-zA-Z']+/g)];
+  const words = [...text.matchAll(/[a-zA-Z']+/g).next()];
 
   const result : string[] = [];
 
@@ -38,28 +39,30 @@ function countWordsRepetition(words: string[]) {
   const resultCountWords : WordWithCount = {};
 
   words.forEach((w) => {
-    resultCountWords[w] = resultCountWords[w]
-      ? resultCountWords[w] + 1
-      : 1;
+    resultCountWords[w] = resultCountWords[w] ?
+      resultCountWords[w] + 1 :
+      1;
   });
 
   return resultCountWords;
 }
 
 function sortWordsByCount(wordsWithCount: WordWithCount) {
-  const value = Object.entries(wordsWithCount).map(([word, count]) => ({ word, count }));
+  const value = Object.entries(wordsWithCount)
+      .map(([word, count]) => ({word, count}));
 
   return value.sort((a, b) => b.count - a.count);
 }
 
-function TopWords({ value }: {value: string}) {
-  const words = getWordsFromText(value.toLowerCase()).filter((e) => e.length > 1);
+function TopWords({value}: {value: string}) {
+  const words = getWordsFromText(value.toLowerCase())
+      .filter((e) => e.length > 1);
   const wordsWithCount = countWordsRepetition(words);
 
-  const topWords = sortWordsByCount(wordsWithCount).map(({ word }) => word);
+  const topWords = sortWordsByCount(wordsWithCount).map(({word}) => word);
 
   return (
-    <div style={{ overflowY: 'auto' }}>
+    <div style={{overflowY: 'auto'}}>
       {!!topWords?.length && topWords.map((w, i) => (
         <div key={w + i}>
           {w}
@@ -85,7 +88,7 @@ function TopWordsFromTextarea() {
   );
 }
 
-export default function () {
+export default function IndexPage() {
   return (
     <div>
       <TopWordsFromTextarea />
