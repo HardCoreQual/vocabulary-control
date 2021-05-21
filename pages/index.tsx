@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import {Col, Row} from 'reactstrap';
+import {TextWordsImpl} from '../entities/TextWords';
 
 function InsertText({text, setText}: {
   text: string,
@@ -19,18 +20,6 @@ function InsertText({text, setText}: {
       </textarea>
     </div>
   );
-}
-
-function getWordsFromText(text: string) {
-  const words = [...text.matchAll(/[a-zA-Z']+/g).next()];
-
-  const result : string[] = [];
-
-  words.forEach((w) => {
-    result.push(...w);
-  });
-
-  return result;
 }
 
 type WordWithCount = Record<string, number>
@@ -55,7 +44,7 @@ function sortWordsByCount(wordsWithCount: WordWithCount) {
 }
 
 function TopWords({value}: {value: string}) {
-  const words = getWordsFromText(value.toLowerCase())
+  const words = new TextWordsImpl(value.toLowerCase()).toArray()
       .filter((e) => e.length > 1);
   const wordsWithCount = countWordsRepetition(words);
 
