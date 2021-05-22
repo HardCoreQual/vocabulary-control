@@ -1,5 +1,5 @@
-interface ToWordsConverter {
-    toArray: () => string[];
+export interface ToWordsConverter {
+  toArray: () => string[];
 }
 
 export class TextWordsImpl implements ToWordsConverter {

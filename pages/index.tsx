@@ -2,6 +2,7 @@ import React from 'react';
 import {useState} from 'react';
 import {Col, Row} from 'reactstrap';
 import {TextWordsImpl} from '../entities/TextWords';
+import {WordsCountRepeatImpl} from '../entities/WordsCountRepeatImpl';
 
 function InsertText({text, setText}: {
   text: string,
@@ -22,33 +23,21 @@ function InsertText({text, setText}: {
   );
 }
 
-type WordWithCount = Record<string, number>
 
-function countWordsRepetition(words: string[]) {
-  const resultCountWords : WordWithCount = {};
-
-  words.forEach((w) => {
-    resultCountWords[w] = resultCountWords[w] ?
-      resultCountWords[w] + 1 :
-      1;
-  });
-
-  return resultCountWords;
-}
-
-function sortWordsByCount(wordsWithCount: WordWithCount) {
-  const value = Object.entries(wordsWithCount)
-      .map(([word, count]) => ({word, count}));
-
-  return value.sort((a, b) => b.count - a.count);
+function sortWordsByCount(wordsWithCount: {word: string, count: number}[]) {
+  return wordsWithCount.sort((a, b) => b.count - a.count);
 }
 
 function TopWords({value}: {value: string}) {
-  const words = new TextWordsImpl(value.toLowerCase()).toArray()
-      .filter((e) => e.length > 1);
-  const wordsWithCount = countWordsRepetition(words);
+  const wordsWithCount = new WordsCountRepeatImpl(
+      new TextWordsImpl(
+          value.toLowerCase(),
+      ),
+  ).calcRepeatCount();
 
-  const topWords = sortWordsByCount(wordsWithCount).map(({word}) => word);
+  const topWords = sortWordsByCount(wordsWithCount)
+      .map(({word}) => word)
+      .filter((w) => w.length > 1);
 
   return (
     <div style={{overflowY: 'auto'}}>
