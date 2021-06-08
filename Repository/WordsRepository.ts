@@ -1,28 +1,26 @@
 import {RepeatedWordType} from '../entities/types';
+import {MainRepository} from './MainRepository';
 
 export interface WordsRepository {
-  get() : Promise<RepeatedWordType[]>;
+  get() : Promise<RepeatedWordType[] | null>;
   add(word: RepeatedWordType) : Promise<boolean>;
-}
-
-type MainDataStructure = {
-  repeatedWords: RepeatedWordType[];
-}
-
-export interface MainRepository {
-  get() : Promise<MainDataStructure>;
-  set(data: MainDataStructure) : Promise<boolean>;
 }
 
 export class WordsRepositoryImpl implements WordsRepository {
   constructor(private repository: MainRepository) {}
 
-  get() {
-    return this.repository.get().then((data) => data.repeatedWords);
+  async get() {
+    const data = await this.repository.get();
+    return data?.repeatedWords || null;
   }
 
   async add(word: RepeatedWordType): Promise<boolean> {
-    const {repeatedWords, ...rest} = await this.repository.get();
+    const data = await this.repository.get();
+    if (!data) {
+      return false;
+    }
+
+    const {repeatedWords, ...rest} = data;
 
     return this.repository.set({
       ...rest,
