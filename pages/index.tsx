@@ -3,6 +3,7 @@ import {useState} from 'react';
 import {Col, Row} from 'reactstrap';
 import {TextWordsImpl} from '../entities/TextWords';
 import {WordsCountRepeatImpl} from '../entities/WordsCountRepeatImpl';
+import {AscSortedRepeatWord} from '../entities/AscSortedRepeatWord';
 
 function InsertText({text, setText}: {
   text: string,
@@ -29,11 +30,14 @@ function sortWordsByCount(wordsWithCount: {word: string, count: number}[]) {
 }
 
 function TopWords({value}: {value: string}) {
-  const wordsWithCount = new WordsCountRepeatImpl(
-      new TextWordsImpl(
-          value.toLowerCase(),
-      ),
-  ).get();
+  const wordsWithCount =
+    new AscSortedRepeatWord(
+        new WordsCountRepeatImpl(
+            new TextWordsImpl(
+                value.toLowerCase(),
+            ),
+        ),
+    ).get();
 
   const topWords = sortWordsByCount(wordsWithCount)
       .map(({word}) => word)
