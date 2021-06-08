@@ -4,7 +4,7 @@ describe('CountWords', () => {
   const calc = (array: string[]) => {
     return new WordsCountRepeatImpl({
       toArray: () => array,
-    }).calcRepeatCount();
+    }).get();
   };
 
   it('empty data', () => {

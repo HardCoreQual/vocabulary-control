@@ -1,13 +1,10 @@
 import {ToWordsConverter} from './TextWords';
+import {RepeatedWords} from './types';
 
-interface WordsCountRepeat {
-  calcRepeatCount() : {word: string, count: number}[];
-}
-
-export class WordsCountRepeatImpl implements WordsCountRepeat {
+export class WordsCountRepeatImpl implements RepeatedWords {
   constructor(private words: ToWordsConverter) {}
 
-  calcRepeatCount() {
+  get() {
     return this.toArray(this.calcRepeatCountInObject());
   }
 

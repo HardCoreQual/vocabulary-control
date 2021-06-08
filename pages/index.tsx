@@ -33,7 +33,7 @@ function TopWords({value}: {value: string}) {
       new TextWordsImpl(
           value.toLowerCase(),
       ),
-  ).calcRepeatCount();
+  ).get();
 
   const topWords = sortWordsByCount(wordsWithCount)
       .map(({word}) => word)
