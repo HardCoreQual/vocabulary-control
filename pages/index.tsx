@@ -4,6 +4,7 @@ import {Col, Row} from 'reactstrap';
 import {TextWordsImpl} from '../entities/TextWords';
 import {WordsCountRepeatImpl} from '../entities/WordsCountRepeatImpl';
 import {AscSortedRepeatWord} from '../entities/AscSortedRepeatWord';
+import {WordsFromRepeatedWords} from '../entities/Words';
 
 function InsertText({text, setText}: {
   text: string,
@@ -24,24 +25,18 @@ function InsertText({text, setText}: {
   );
 }
 
-
-function sortWordsByCount(wordsWithCount: {word: string, count: number}[]) {
-  return wordsWithCount.sort((a, b) => b.count - a.count);
-}
-
 function TopWords({value}: {value: string}) {
-  const wordsWithCount =
-    new AscSortedRepeatWord(
-        new WordsCountRepeatImpl(
-            new TextWordsImpl(
-                value.toLowerCase(),
-            ),
-        ),
-    ).get().reverse();
-
-  const topWords = sortWordsByCount(wordsWithCount)
-      .map(({word}) => word)
-      .filter((w) => w.length > 1);
+  const topWords = new WordsFromRepeatedWords(
+      new AscSortedRepeatWord(
+          new WordsCountRepeatImpl(
+              new TextWordsImpl(
+                  value.toLowerCase(),
+              ),
+          ),
+      ),
+  )
+      .get()
+      .reverse();
 
   return (
     <div style={{overflowY: 'auto'}}>
