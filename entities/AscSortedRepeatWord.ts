@@ -13,6 +13,6 @@ export class AscSortedRepeatWord implements RepeatedWords {
   }
 
   private compareRepeatedWords(a: RepeatedWordType, b: RepeatedWordType) {
-    return b.count - a.count;
+    return a.count - b.count;
   }
 }

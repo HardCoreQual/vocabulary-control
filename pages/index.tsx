@@ -37,7 +37,7 @@ function TopWords({value}: {value: string}) {
                 value.toLowerCase(),
             ),
         ),
-    ).get();
+    ).get().reverse();
 
   const topWords = sortWordsByCount(wordsWithCount)
       .map(({word}) => word)
