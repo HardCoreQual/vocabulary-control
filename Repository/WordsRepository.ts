@@ -22,12 +22,50 @@ export class WordsRepositoryImpl implements WordsRepository {
 
     const {repeatedWords, ...rest} = data;
 
+    const {searchedRepeatWord, newRepeatWords} = this.wordSearch(
+        word.word,
+        repeatedWords,
+    );
+
+    const newSearchedWord = {
+      word: word.word,
+      count: searchedRepeatWord.count + word.count,
+    };
+
     return this.repository.set({
       ...rest,
       repeatedWords: [
-        ...repeatedWords,
-        word,
+        ...newRepeatWords,
+        newSearchedWord,
       ],
     });
+  }
+
+  private wordSearch(word: string, repeatedWords: RepeatedWordType[]) : {
+    searchedRepeatWord: RepeatedWordType,
+    newRepeatWords: RepeatedWordType[],
+  } {
+    let index = -1;
+
+    repeatedWords.forEach((e, i) => {
+      if (e.word === word) {
+        index = i;
+      }
+    });
+
+    if (index < 0 ) {
+      return {
+        newRepeatWords: repeatedWords,
+        searchedRepeatWord: {
+          word,
+          count: 0,
+        },
+      };
+    }
+
+    const newRepeatWords = [...repeatedWords];
+    const searchedRepeatWords = newRepeatWords.splice(index, 1);
+    const searchedRepeatWord = searchedRepeatWords[0];
+    return {searchedRepeatWord, newRepeatWords};
   }
 }
