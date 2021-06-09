@@ -14,6 +14,10 @@ export class WordsRepositoryImpl implements WordsRepository {
     return data?.repeatedWords || null;
   }
 
+  async addBunch(words: RepeatedWordType[]): Promise<boolean[]> {
+    return Promise.all(words.map(this.add));
+  }
+
   async add(word: RepeatedWordType): Promise<boolean> {
     const data = await this.repository.get();
     if (!data) {
