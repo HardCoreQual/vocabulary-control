@@ -21,13 +21,13 @@ export function TopWords({value}: { value: string }) {
       .get()
       .reverse();
 
-  useEffect(() => {
-    const repository = new WordsRepositoryImpl(
-        new MainRepositoryImpl(),
-    );
-
-    repository.addBunch(topWordsRepeated.get());
-  }, [topWords]);
+  // useEffect(() => {
+  //   const repository = new WordsRepositoryImpl(
+  //       new MainRepositoryImpl(),
+  //   );
+  //
+  //   repository.addBunch(topWordsRepeated.get());
+  // }, [topWords]);
 
   return (
     <div style={{overflowY: 'auto'}}>
