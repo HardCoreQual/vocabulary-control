@@ -1,4 +1,4 @@
-import {RepeatedWordType} from '../entities/types';
+import {RepeatedWordType} from '../domain/types';
 import {MainRepository} from './MainRepository';
 
 export interface WordsRepository {

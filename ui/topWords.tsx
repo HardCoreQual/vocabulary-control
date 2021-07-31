@@ -1,7 +1,7 @@
-import {WordsFromRepeatedWords} from '../entities/Words';
-import {AscSortedRepeatWord} from '../entities/AscSortedRepeatWord';
-import {WordsCountRepeatImpl} from '../entities/WordsCountRepeatImpl';
-import {TextWordsImpl} from '../entities/TextWords';
+import {WordsFromRepeatedWords} from '../domain/Words';
+import {AscSortedRepeatWord} from '../domain/AscSortedRepeatWord';
+import {WordsCountRepeatImpl} from '../domain/WordsCountRepeatImpl';
+import {TextWordsImpl} from '../domain/TextWords';
 import React, {useEffect} from 'react';
 import {WordsRepositoryImpl} from '../Repository/WordsRepository';
 import {MainRepositoryImpl} from '../Repository/MainRepository';
