@@ -8,13 +8,12 @@ export class TextWordsImpl implements ToWordsConverter {
   constructor(private text: string) {}
 
   toArray() {
-  	const result : string[] = [];
+    const result : string[] = [];
+    let match : RegExpExecArray | null;
+    while (match = this.rexExp.exec(this.text)) {
+      result.push(match[0]);
+    }
 
-  	let match : RegExpExecArray | null;
-  	while (match = this.rexExp.exec(this.text)) {
-  		result.push(match[0]);
-  	}
-
-  	return result || [];
+    return result || [];
   }
 }

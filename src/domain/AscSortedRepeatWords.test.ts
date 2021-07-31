@@ -2,45 +2,45 @@ import {AscSortedRepeatWord} from './AscSortedRepeatWord';
 import {RepeatedWordType} from './types';
 
 describe('AscSortedRepeatWords', () => {
-	const create = (data: RepeatedWordType[]) => {
-		const mock = {
-			get: () => data,
-		};
+  const create = (data: RepeatedWordType[]) => {
+    const mock = {
+      get: () => data,
+    };
 
-		return new AscSortedRepeatWord(mock);
-	};
+    return new AscSortedRepeatWord(mock);
+  };
 
-	it('empty', () => {
-		const words = create([]).get();
-		expect(words.length).toBe(0);
-	});
+  it('empty', () => {
+    const words = create([]).get();
+    expect(words.length).toBe(0);
+  });
 
-	it('one element', () => {
-		const data = [{word: 'hi', count: 2}];
-		const words = create(data).get();
-		expect(words).toStrictEqual(data);
-	});
+  it('one element', () => {
+    const data = [{word: 'hi', count: 2}];
+    const words = create(data).get();
+    expect(words).toStrictEqual(data);
+  });
 
-	it('three elements', () => {
-		const data = [{
-			word: 'g', count: 5,
-		},
-		{
-			word: 'hi', count: 2,
-		},
-		{
-			word: 'hello', count: 14,
-		}];
+  it('three elements', () => {
+    const data = [{
+      word: 'g', count: 5,
+    },
+    {
+      word: 'hi', count: 2,
+    },
+    {
+      word: 'hello', count: 14,
+    }];
 
-		const words = create(data).get();
+    const words = create(data).get();
 
-		expect(words).toStrictEqual([{
-			word: 'hi', count: 2,
-		}, {
-			word: 'g', count: 5,
-		}, {
-			word: 'hello', count: 14,
-		}]);
-	});
+    expect(words).toStrictEqual([{
+      word: 'hi', count: 2,
+    }, {
+      word: 'g', count: 5,
+    }, {
+      word: 'hello', count: 14,
+    }]);
+  });
 });
 
