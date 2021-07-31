@@ -15,7 +15,7 @@ export class WordsRepositoryImpl implements WordsRepository {
   }
 
   async addBunch(words: RepeatedWordType[]): Promise<boolean[]> {
-    return Promise.all(words.map(this.add));
+    return Promise.all(words.map((e) => this.add(e)));
   }
 
   async add(word: RepeatedWordType): Promise<boolean> {
