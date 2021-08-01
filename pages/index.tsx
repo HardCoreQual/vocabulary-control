@@ -1,10 +1,10 @@
 import React from 'react';
-import {TopWordsFromTextarea} from '../src/ui/topWordsFromTextarea';
+import {App} from '../src/ui/app';
 
 export default function IndexPage() {
   return (
     <div>
-      <TopWordsFromTextarea />
+      <App />
     </div>
   );
 }

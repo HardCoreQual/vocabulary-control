@@ -3,7 +3,7 @@ import {Col, Row} from 'reactstrap';
 import {InsertText} from './insertText';
 import {TopWords} from './topWords';
 
-export function TopWordsFromTextarea() {
+export function App() {
   const [text, setText] = useState('');
 
   return (
