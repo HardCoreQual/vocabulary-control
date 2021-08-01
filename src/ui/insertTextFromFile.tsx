@@ -1,9 +1,17 @@
 import {PdfLoader} from './pdfLoader';
 
+async function pdfToText(pdf: ArrayBuffer) {
+  return '';
+}
 
 function InsertTextFromPdf({setText}: { setText: (t: string) => void }) {
-  return <PdfLoader setFile={(pdf) => {
-    if (!pdf) setText('');
+  return <PdfLoader setFile={ async (pdf) => {
+    if (!pdf) {
+      setText('');
+      return;
+    }
+
+    setText(await pdfToText(pdf));
   }} />;
 }
 
