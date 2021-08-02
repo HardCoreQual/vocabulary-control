@@ -1,7 +1,13 @@
 import type {NextApiRequest, NextApiResponse} from 'next';
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-  const data = req.body;
-  console.log( data );
-  res.status(200).json({name: 'PDF'});
+  return res.status(200).json({text: ''});
+};
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '100mb',
+    },
+  },
 };
