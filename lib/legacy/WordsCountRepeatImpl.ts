@@ -1,8 +1,8 @@
-import {ToWordsConverter} from './TextWords';
+import {splitTextToWords} from './TextWords';
 import {RepeatedWords} from './types';
 
 export class WordsCountRepeatImpl implements RepeatedWords {
-  constructor(private words: ToWordsConverter) {}
+  constructor(private text: string) {}
 
   get() {
     return this.toArray(this.calcRepeatCountInObject());
@@ -11,7 +11,7 @@ export class WordsCountRepeatImpl implements RepeatedWords {
   private calcRepeatCountInObject() {
     const result : Record<string, number> = {};
 
-    this.words.toArray().forEach((word) => {
+    splitTextToWords(this.text).forEach((word) => {
       const precedentValue = result[word] || 0;
       result[word] = precedentValue + 1;
     });

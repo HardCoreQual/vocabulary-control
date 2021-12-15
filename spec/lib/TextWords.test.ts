@@ -1,6 +1,6 @@
 import {splitTextToWords} from 'lib/legacy/TextWords';
 
-describe('TextWordsImpl', () => {
+describe('split text to words', () => {
   it('empty text -> []', () => {
     const words = splitTextToWords('');
     expect(words.length).toBe(0);
