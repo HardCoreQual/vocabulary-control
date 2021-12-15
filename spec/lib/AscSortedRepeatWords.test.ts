@@ -1,5 +1,5 @@
-import {AscSortedRepeatWord} from './AscSortedRepeatWord';
-import {RepeatedWordType} from './types';
+import {AscSortedRepeatWord} from 'lib/legacy/AscSortedRepeatWord';
+import {RepeatedWordType} from 'lib/legacy/types';
 
 describe('AscSortedRepeatWords', () => {
   const create = (data: RepeatedWordType[]) => {

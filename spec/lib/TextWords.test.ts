@@ -1,4 +1,4 @@
-import {TextWordsImpl} from './TextWords';
+import {TextWordsImpl} from 'lib/legacy/TextWords';
 
 describe('TextWordsImpl', () => {
   it('empty text -> []', () => {

@@ -1,4 +1,4 @@
-import {WordsCountRepeatImpl} from './WordsCountRepeatImpl';
+import {WordsCountRepeatImpl} from 'lib/legacy/WordsCountRepeatImpl';
 
 describe('CountWords', () => {
   const calc = (array: string[]) => new WordsCountRepeatImpl({

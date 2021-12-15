@@ -1,10 +1,10 @@
-import {WordsFromRepeatedWords} from '../lib/legacy/Words';
-import {AscSortedRepeatWord} from '../lib/legacy/AscSortedRepeatWord';
-import {WordsCountRepeatImpl} from '../lib/legacy/WordsCountRepeatImpl';
+import {WordsFromRepeatedWords} from 'lib/legacy/Words';
+import {AscSortedRepeatWord} from 'lib/legacy/AscSortedRepeatWord';
+import {WordsCountRepeatImpl} from 'lib/legacy/WordsCountRepeatImpl';
 import {TextWordsImpl} from 'lib/legacy/TextWords';
 import React, {useEffect} from 'react';
-import {WordsRepositoryImpl} from '../lib/Repository/WordsRepository';
-import {MainRepositoryImpl} from '../lib/Repository/MainRepository';
+import {WordsRepositoryImpl} from 'lib/Repository/WordsRepository';
+import {MainRepositoryImpl} from 'lib/Repository/MainRepository';
 
 export function TopWords({value}: { value: string }) {
   const topWordsRepeated = new WordsCountRepeatImpl(
