@@ -25,7 +25,8 @@
       "lib/*": [
         "./lib/*"
       ]
-    }
+    },
+    "allowJs": true
   },
   "include": [
     "next-env.d.ts",

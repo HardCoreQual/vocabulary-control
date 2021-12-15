@@ -1,5 +1,5 @@
-import {RepeatedWordType} from '../legacy/types';
 import {MainRepository} from './MainRepository';
+import {RepeatedWordType} from "lib/getWords";
 
 export interface WordsRepository {
 get() : Promise<RepeatedWordType[] | null>;

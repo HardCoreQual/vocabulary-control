@@ -1,4 +1,4 @@
-import {RepeatedWordType} from '../legacy/types';
+import {RepeatedWordType} from "lib/getWords";
 
 type MainDataStructure = {
 repeatedWords: RepeatedWordType[];

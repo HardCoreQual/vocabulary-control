@@ -5,14 +5,14 @@ import {getOrderedWords, getTopWordsWithRepeats} from "lib/getWords";
 
 export function TopWords({value}: { value: string }) {
   const topWordsRepeated = getTopWordsWithRepeats(value);
-  const orderedWords = getOrderedWords(value);
+  const orderedWords = getOrderedWords(topWordsRepeated);
 
   useEffect(() => {
     const repository = new WordsRepositoryImpl(
       new MainRepositoryImpl(),
     );
 
-    repository.addBunch(topWordsRepeated.get());
+    repository.addBunch(topWordsRepeated);
   }, [orderedWords]);
 
   return (
