@@ -1,15 +1,7 @@
 import {PdfLoader} from './pdfLoader';
-import axios from 'axios';
 
-async function pdfToText(pdf: ArrayBuffer) {
-  const data = new FormData();
-
-  data.append('pdf', new Blob([pdf]));
-  const resp = await axios.post('/api/pdf', data, {
-    headers: {'content-type': 'multipart/form-data'},
-  });
-
-  return resp.data;
+async function pdfToText(pdf: ArrayBuffer): Promise<never> {
+  throw new Error('Temporary disabled')
 }
 
 function InsertTextFromPdf({setText}: { setText: (t: string) => void }) {
