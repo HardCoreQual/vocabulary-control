@@ -2,18 +2,22 @@ export interface ToWordsConverter {
   toArray: () => string[];
 }
 
-export class TextWordsImpl implements ToWordsConverter {
-  private rexExp = /[a-zA-Z']+/g;
+const rexExp = /[a-zA-Z']+/g;
 
+export const splitTextToWords = (text: string) => {
+  const result : string[] = [];
+  let match : RegExpExecArray | null;
+  while (match = rexExp.exec(text)) {
+    result.push(match[0]);
+  }
+
+  return result || [];
+}
+
+export class TextWordsImpl implements ToWordsConverter {
   constructor(private text: string) {}
 
   toArray() {
-    const result : string[] = [];
-    let match : RegExpExecArray | null;
-    while (match = this.rexExp.exec(this.text)) {
-      result.push(match[0]);
-    }
-
-    return result || [];
+    return splitTextToWords(this.text);
   }
 }
