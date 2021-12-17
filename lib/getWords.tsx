@@ -1,4 +1,4 @@
-import {pipe} from "lib/generics";
+import {pipe} from "ts-functional-pipe";
 
 export type RepeatedWordType = { word: string, count: number };
 
