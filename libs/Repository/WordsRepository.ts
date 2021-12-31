@@ -1,5 +1,5 @@
 import {MainRepository} from './MainRepository';
-import {RepeatedWordType} from "lib/getWords";
+import {RepeatedWordType} from "../getWords";
 
 export interface WordsRepository {
 get() : Promise<RepeatedWordType[] | null>;

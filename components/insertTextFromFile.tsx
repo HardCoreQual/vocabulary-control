@@ -1,7 +1,8 @@
 import {PdfLoader} from './pdfLoader';
+import {pdf2txt} from "../libs/pdf2txt";
 
-async function pdfToText(pdf: ArrayBuffer): Promise<never> {
-  throw new Error('Temporary disabled')
+async function pdfToText(pdf: ArrayBuffer): Promise<string> {
+  return pdf2txt(pdf);
 }
 
 function InsertTextFromPdf({setText}: { setText: (t: string) => void }) {

@@ -1,4 +1,4 @@
-import {splitTextToWords} from "lib/getWords";
+import {splitTextToWords} from "../../libs/getWords";
 
 describe('split text to words', () => {
   it('empty text -> []', () => {
