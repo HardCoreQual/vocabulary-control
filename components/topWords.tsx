@@ -4,6 +4,12 @@ import {moreUsedWordsCoefficient} from "../config";
 import {Button} from "@mui/material";
 
 
+const downloadBlob = (blob: Blob, name: string) => {
+  const link = document.createElement('a');
+  link.href = window.URL.createObjectURL(blob);
+  link.download = name;
+  link.click();
+};
 
 const downloadObjectAsJson = (data: any, name: string) => {
   const json = JSON.stringify(data);
@@ -11,10 +17,7 @@ const downloadObjectAsJson = (data: any, name: string) => {
     type: 'application/json'
   });
 
-  const link = document.createElement('a');
-  link.href = window.URL.createObjectURL(blob);
-  link.download = name + '.json';
-  link.click();
+  downloadBlob(blob, name + '.json');
 };
 
 export function TopWords({value}: { value: string }) {
@@ -30,10 +33,12 @@ export function TopWords({value}: { value: string }) {
     }}>Download</Button>
 
     <Button variant="contained" onClick={() => {
-      downloadObjectAsJson(
-        orderedWords.map((e) => ({front: e})),
-        'anki-words'
-      )
+      const text = orderedWords.join('\n');
+      const blob = new Blob([new Buffer(text)], {
+        type: 'plain/text'
+      });
+
+      downloadBlob(blob, 'anki-words.txt');
     }}>Download for Anki</Button>
 
     <div style={{ margin: '5px', fontSize: '24px' }}>
