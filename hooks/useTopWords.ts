@@ -27,7 +27,7 @@ const excludeLessUsed = (words: RepeatedWordType[]) => {
   });
 }
 
-export const useTopWords = (value: string) => {
+export const extractTopWords = (value: string) => {
   const topWordsRepeated = pipe(
     getTopWordsWithRepeats,
     sortRepeatWords(true),
@@ -39,17 +39,24 @@ export const useTopWords = (value: string) => {
     (words: RepeatedWordType[]) => words.map(({word}) => word),
   )(moreUsedTopWords);
 
+  return {
+    orderedWords,
+    topWordsRepeated,
+    totalCountWords: topWordsRepeated.length,
+    moreUsedCountWords: moreUsedTopWords.length,
+  };
+};
+
+export const useTopWords = (value: string) => {
+  const {topWordsRepeated, ...words} = extractTopWords(value);
+
   useEffect(() => {
     const repository = new WordsRepositoryImpl(
       new MainRepositoryImpl(),
     );
 
     void repository.addBunch(topWordsRepeated);
-  }, [orderedWords]);
+  }, [words.orderedWords]);
 
-  return {
-    orderedWords,
-    totalCountWords: topWordsRepeated.length,
-    moreUsedCountWords: moreUsedTopWords.length,
-  };
+  return words;
 };
