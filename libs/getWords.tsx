@@ -14,7 +14,7 @@ const calcRepeat = (words: string[]) => {
   return Object.entries(result).map(([word, count]) => ({word, count}));
 }
 
-const sortRepeatWords = (desc = false) => (repeatWords: RepeatedWordType[]) => {
+export const sortRepeatWords = (desc = false) => (repeatWords: RepeatedWordType[]) => {
   return repeatWords.sort((a, b) => (a.count - b.count) * (desc ? -1 : 1));
 }
 
@@ -33,7 +33,5 @@ export const getTopWordsWithRepeats = pipe(
   calcRepeat,
 );
 
-export const getOrderedWords = pipe(
-  sortRepeatWords(true),
-  (words: RepeatedWordType[]) => words.map(({word}) => word),
-)
+
+

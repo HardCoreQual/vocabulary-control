@@ -1,19 +1,48 @@
 import React, {useEffect} from 'react';
 import {WordsRepositoryImpl} from 'lib/../libs/Repository/WordsRepository';
 import {MainRepositoryImpl} from 'lib/../libs/Repository/MainRepository';
-import {getOrderedWords, getTopWordsWithRepeats} from "../libs/getWords";
+import {getTopWordsWithRepeats, RepeatedWordType, sortRepeatWords} from "../libs/getWords";
+import {pipe} from "ts-functional-pipe";
 
-export function TopWords({value}: { value: string }) {
-  const topWordsRepeated = getTopWordsWithRepeats(value);
-  const orderedWords = getOrderedWords(topWordsRepeated);
+const moreUsedWordsCoefficient = 0.99;
+
+const excludeLessUsed = (words: RepeatedWordType[]) => {
+  const totalCountWords = words.reduce((sum, e) => sum + e.count, 0);
+  let savedCountWords = 0;
+
+  return words.filter((e) => {
+    if (savedCountWords / totalCountWords > moreUsedWordsCoefficient) {
+      return false;
+    }
+
+    savedCountWords += e.count;
+    return e;
+  });
+}
+const useTopWords = (value: string) => {
+  const topWordsRepeated = pipe(
+    getTopWordsWithRepeats,
+    sortRepeatWords(true),
+  )(value);
+
+  const orderedWords = pipe(
+    excludeLessUsed,
+    (words: RepeatedWordType[]) => words.map(({word}) => word),
+  )(topWordsRepeated);
 
   useEffect(() => {
     const repository = new WordsRepositoryImpl(
       new MainRepositoryImpl(),
     );
 
-    repository.addBunch(topWordsRepeated);
+    void repository.addBunch(topWordsRepeated);
   }, [orderedWords]);
+
+  return {orderedWords};
+};
+
+export function TopWords({value}: { value: string }) {
+  const {orderedWords} = useTopWords(value);
 
   return (
     <div style={{
