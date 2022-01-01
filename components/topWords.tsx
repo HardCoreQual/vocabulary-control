@@ -1,11 +1,29 @@
 import React from 'react';
 import {useTopWords} from "../hooks/useTopWords";
 import {moreUsedWordsCoefficient} from "../config";
+import {Button} from "@mui/material";
 
 export function TopWords({value}: { value: string }) {
   const {orderedWords, moreUsedCountWords, totalCountWords} = useTopWords(value);
 
+  if (orderedWords.length === 0) {
+    return null;
+  }
+
   return <>
+    <Button variant="contained" onClick={() => {
+      const json = JSON.stringify(orderedWords);
+      const blob = new Blob([new Buffer(json)], {
+        type: 'application/json'
+      });
+
+      const link = document.createElement('a');
+      link.href = window.URL.createObjectURL(blob);
+      link.download = 'words.json';
+      link.click();
+
+    }}>Download</Button>
+
     <div style={{ margin: '5px', fontSize: '24px' }}>
       {moreUsedWordsCoefficient * 100}% is {moreUsedCountWords} from {totalCountWords} words
     </div>
