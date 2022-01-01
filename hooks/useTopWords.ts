@@ -4,11 +4,8 @@ import {useEffect} from "react";
 import {WordsRepositoryImpl} from "../libs/Repository/WordsRepository";
 import {MainRepositoryImpl} from "../libs/Repository/MainRepository";
 import {moreUsedWordsCoefficient, moreUsedWordsRepeatedMoreThat} from "../config";
+import {map, reduce, select, sum} from "../libs/utils/fp";
 
-const select = <R, K extends string>(key: K) => <T extends Record<K, any>>(data: T) => data[key];
-const sum = (a: number, b: number) => a + b;
-const map = <T, R = any>(fn: (e: T, i: number, arr: T[]) => R) => (arr: T[]) => arr.map(fn);
-const reduce = <T, R>(fn: (r: R, e: T) => R) => (init: R) => (arr: T[]) => arr.reduce(fn, init);
 const calcCountTotalWords = pipe(
   map<{ count: number }>(select('count')),
   reduce(sum)(0),
