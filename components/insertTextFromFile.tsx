@@ -1,25 +1,25 @@
-import {PdfLoader} from './pdfLoader';
 import {pdf2txt} from "../libs/pdf2txt";
-
-async function pdfToText(pdf: ArrayBuffer): Promise<string> {
-  return pdf2txt(pdf);
-}
-
-function InsertTextFromPdf({setText}: { setText: (t: string) => void }) {
-  return <PdfLoader setFile={ async (pdf) => {
-    if (!pdf) {
-      setText('');
-      return;
-    }
-
-    setText(await pdfToText(pdf));
-  }} />;
-}
+import {Button} from "@mui/material";
+import React, {useState} from "react";
 
 export function InsertTextFromFile({setText}: {
   setText: (t: string) => void,
 }) {
+  const [file, setFile] = useState<null | ArrayBuffer>(null);
   return <>
-    <InsertTextFromPdf setText={setText} />
+    <input type="file" onChange={async (e) => {
+      const v = e.target.files?.item(0);
+
+      const arrayBuffer = await v?.arrayBuffer();
+      setFile(arrayBuffer || null);
+    }} />
+    <Button onClick={async() => {
+      if (!file) {
+        setText('');
+        return;
+      }
+
+      setText(await pdf2txt(file));
+    }}>Submit File</Button>
   </>;
 }
