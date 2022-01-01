@@ -19,7 +19,7 @@ export const sortRepeatWords = (desc = false) => (repeatWords: RepeatedWordType[
   return repeatWords.sort((a, b) => (a.count - b.count) * (desc ? -1 : 1));
 }
 
-const rexExp = /([a-zA-Z]+'[a-zA-Z]+)|([a-zA-Z]+)/g;
+const rexExp = /[a-zA-Z']+/g;
 export const splitTextToWords = (text: string) => {
   const result: string[] = [];
   let match: RegExpExecArray | null;
