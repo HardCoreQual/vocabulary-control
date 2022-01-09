@@ -10,11 +10,21 @@ model User {
   createdAt DateTime @default(now())
   email     String   @unique
   name      String?
+  words UserWord[]
 }
 
-model Words {
+model Word {
     id  Int @id @default(autoincrement())
     text String
+    users UserWord[]
+}
+
+model UserWord {
+    @@unique([userId, wordId])
+    userId Int
+    user User @relation(fields: [userId], references: [id])
+    wordId Int
+    word Word @relation(fields: [wordId], references: [id])
 }
 
 datasource db {
