@@ -1,8 +1,5 @@
 import {pipe} from "ts-functional-pipe";
 import {getTopWordsWithRepeats, RepeatedWordType, sortRepeatWords} from "../libs/getWords";
-import {useEffect} from "react";
-import {WordsRepositoryImpl} from "../libs/Repository/WordsRepository";
-import {MainRepositoryImpl} from "../libs/Repository/MainRepository";
 import {moreUsedWordsCoefficient, moreUsedWordsRepeatedMoreThat} from "../config";
 import {map, reduce, select, sum} from "../libs/utils/fp";
 
@@ -45,18 +42,4 @@ export const extractTopWords = (value: string) => {
     totalCountWords: topWordsRepeated.length,
     moreUsedCountWords: moreUsedTopWords.length,
   };
-};
-
-export const useTopWords = (value: string) => {
-  const {topWordsRepeated, ...words} = extractTopWords(value);
-
-  useEffect(() => {
-    const repository = new WordsRepositoryImpl(
-      new MainRepositoryImpl(),
-    );
-
-    void repository.addBunch(topWordsRepeated);
-  }, [words.orderedWords]);
-
-  return words;
 };

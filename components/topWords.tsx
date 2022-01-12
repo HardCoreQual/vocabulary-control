@@ -1,7 +1,9 @@
 import React from 'react';
-import {useTopWords} from "../hooks/useTopWords";
+import {extractTopWords} from "../hooks/useTopWords";
 import {moreUsedWordsCoefficient} from "../config";
 import {Button} from "@mui/material";
+import {trpc} from "../hooks/trpc";
+import {useSession} from "next-auth/react";
 
 
 const downloadBlob = (blob: Blob, name: string) => {
@@ -21,10 +23,19 @@ const downloadObjectAsJson = (data: any, name: string) => {
 };
 
 export function TopWords({value}: { value: string }) {
-  const {orderedWords, moreUsedCountWords, totalCountWords} = useTopWords(value);
+  const {topWordsRepeated, orderedWords, moreUsedCountWords, totalCountWords} = extractTopWords(value);
+  const { data } = useSession();
+  const addWords = trpc.useMutation('add_words');
 
   if (orderedWords.length === 0) {
     return null;
+  }
+
+  const handleAddWordsToMyProfile = () => {
+    addWords.mutate({
+      email: data?.user?.email || '',
+      words: topWordsRepeated.map(e => ({text: e.word, count: e.count})),
+    })
   }
 
   return <>
@@ -32,14 +43,7 @@ export function TopWords({value}: { value: string }) {
       downloadObjectAsJson(orderedWords, 'words')
     }}>Download</Button>
 
-    <Button variant="contained" onClick={() => {
-      const text = orderedWords.join('\n');
-      const blob = new Blob([new Buffer(text)], {
-        type: 'plain/text'
-      });
-
-      downloadBlob(blob, 'anki-words.txt');
-    }}>Download for Anki</Button>
+    <Button variant="contained" onClick={handleAddWordsToMyProfile}>Save to my words</Button>
 
     <div style={{ margin: '5px', fontSize: '24px' }}>
       {moreUsedWordsCoefficient * 100}% is {moreUsedCountWords} from {totalCountWords} words
