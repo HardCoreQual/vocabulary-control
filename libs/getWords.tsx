@@ -3,17 +3,16 @@ import {filter, map} from "./utils/fp";
 
 export type RepeatedWordType = { word: string, count: number };
 
-
 const calcRepeat = (words: string[]) => {
-  const result: Record<string, number> = {};
+  const result = new Map<string, number>();
 
   words.forEach((word) => {
-    const precedentValue = result[word] || 0;
-    result[word] = precedentValue + 1;
+    const precedentValue = result.get(word) || 0;
+    result.set(word, precedentValue + 1);
   });
 
-  return Object.entries(result).map(([word, count]) => ({word, count}));
-}
+  return Array.from(result.entries()).map(([word, count]) => ({word, count}))
+};
 
 export const sortRepeatWords = (desc = false) => (repeatWords: RepeatedWordType[]) => {
   return repeatWords.sort((a, b) => (a.count - b.count) * (desc ? -1 : 1));
