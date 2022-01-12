@@ -1,31 +1,45 @@
 import * as trpc from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
 import { z } from 'zod';
+import {PrismaClient} from "@prisma/client";
+
+
+const prisma = new PrismaClient();
 
 const appRouter = trpc.router()
-  .query('hello', {
-    input: z
-      .object({
-        text: z.string().nullish(),
-      })
-      .nullish(),
-    resolve({ input }) {
-      return {
-        greeting: `hello ${input?.text ?? 'world'}`,
-      };
-    },
-  })
   .mutation('add_words', {
     input: z
       .object({
-        email: z.string().nullish(),
+        email: z.string(),
         words: z.object({
           text: z.string(),
           count: z.number().positive(),
         }).array()
       }),
-    resolve({input}) {
-      console.log(  )
+    async resolve({input}) {
+      throw new Error('Method not finished')
+
+      const wordIds = prisma.word.findMany({
+        select: {
+          id: true,
+          text: true,
+        },
+        where: {
+          OR: input.words.map((e) => ({
+            text: e.text,
+          })),
+        }
+      });
+
+      prisma.userWord
+        .createMany({
+          data: input.words.map((w) => {
+            return {
+              wordId: 3,
+              userId: '',
+            }
+          }),
+        })
     }
   })
 
