@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {InsertText} from "../components/insertText";
 import {TopWords} from "../components/topWords";
-import {signIn, useSession} from "next-auth/react"
+import {signIn, signOut, useSession} from "next-auth/react"
 
 export default function IndexPage() {
   const [text, setText] = useState('');
@@ -11,6 +11,7 @@ export default function IndexPage() {
   return (
     <>
       {status === 'unauthenticated' && <button onClick={() => signIn()}>Login</button>}
+      {status === 'authenticated' && <button onClick={() => signOut()}>SignOut</button>}
       <InsertText text={text} setText={setText}/>
       <TopWords value={text}/>
     </>
