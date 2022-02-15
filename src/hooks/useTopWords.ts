@@ -7,6 +7,7 @@ const calcCountTotalWords = pipe(
   map<{ count: number }>(select('count')),
   reduce(sum)(0),
 );
+
 const excludeLessUsed = (words: RepeatedWordType[]) => {
   const totalCountWords = calcCountTotalWords(words);
   let savedCountWords = 0;
@@ -30,16 +31,17 @@ export const extractTopWords = (value: string) => {
     sortRepeatWords(true),
   )(value);
 
-  const moreUsedTopWords = excludeLessUsed(topWordsRepeated);
+  // const moreUsedTopWords = excludeLessUsed(topWordsRepeated);
 
   const orderedWords = pipe(
     (words: RepeatedWordType[]) => words.map(({word}) => word),
-  )(moreUsedTopWords);
+  )(topWordsRepeated);
 
   return {
     orderedWords,
     topWordsRepeated,
     totalCountWords: topWordsRepeated.length,
-    moreUsedCountWords: moreUsedTopWords.length,
+    moreUsedCountWords: topWordsRepeated.length,
+    // moreUsedCountWords: moreUsedTopWords.length,
   };
 };

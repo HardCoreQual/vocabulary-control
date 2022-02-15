@@ -23,21 +23,6 @@ model User {
     words UserWord[]
 }
 
-model Word {
-    id  Int @id @default(autoincrement())
-    text String
-    users UserWord[]
-}
-
-model UserWord {
-    @@unique([userId, wordId])
-    userId String
-    user User @relation(fields: [userId], references: [id])
-    wordId Int
-    word Word @relation(fields: [wordId], references: [id])
-}
-
-
 model Account {
   id                 String  @id @default(cuid())
   userId             String
@@ -73,5 +58,20 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+
+model Word {
+    id  Int @id @default(autoincrement())
+    text String
+    users UserWord[]
+}
+
+model UserWord {
+    @@unique([userId, wordId])
+    userId String
+    user User @relation(fields: [userId], references: [id])
+    wordId Int
+    word Word @relation(fields: [wordId], references: [id])
 }
 
