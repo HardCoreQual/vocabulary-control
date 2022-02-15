@@ -28,6 +28,7 @@ export const splitTextToWords = (text: string) => {
 
   return result || [];
 }
+
 export const getTopWordsWithRepeats = pipe(
   splitTextToWords,
   filter(e => e.length > 1),

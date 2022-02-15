@@ -1,10 +1,8 @@
 import * as trpc from '@trpc/server';
 import * as trpcNext from '@trpc/server/adapters/next';
-import { z } from 'zod';
-import {PrismaClient} from "@prisma/client";
+import {z} from 'zod';
+import {prisma} from "../../../prismaClient";
 
-
-const prisma = new PrismaClient();
 
 const appRouter = trpc.router()
   .mutation('add_words', {
