@@ -1,6 +1,6 @@
 import {pipe} from "ts-functional-pipe";
 import {getTopWordsWithRepeats, RepeatedWordType, sortRepeatWords} from "../libs/getWords";
-import {moreUsedWordsCoefficient, moreUsedWordsRepeatedMoreThat} from "../config";
+import {moreUsedWordsCoefficient, moreUsedWordsRepeatedMoreThat} from "../../config";
 import {map, reduce, select, sum} from "../libs/utils/fp";
 
 const calcCountTotalWords = pipe(

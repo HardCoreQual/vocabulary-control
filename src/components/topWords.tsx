@@ -1,6 +1,6 @@
 import React from 'react';
 import {extractTopWords} from "../hooks/useTopWords";
-import {moreUsedWordsCoefficient} from "../config";
+import {moreUsedWordsCoefficient} from "../../config";
 import {Button} from "@mui/material";
 import {trpc} from "../hooks/trpc";
 import {useSession} from "next-auth/react";
